@@ -3,3 +3,6 @@ venv
 .qodo
 .venv
 .env
+LangGraph/harrypotter-1-300.pdf
+.gitignore
+LangGraph/harrypotter.pdf
