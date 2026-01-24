@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Teacher Chatbot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-[#212121] h-screen flex">
+    <!-- Sidebar -->
+    <div
+      class="w-16 bg-[#1a1a1a] border-r border-gray-800 flex flex-col items-center py-4 space-y-4"
+    >
+      <button
+        class="w-10 h-10 rounded-lg bg-[#2a2a2a] hover:bg-[#3a3a3a] flex items-center justify-center text-gray-400"
+      >
+        <svg
+          class="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 4v16m8-8H4"
+          ></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Main Chat Area -->
+    <div class="flex-1 flex flex-col">
+      <!-- Header -->
+      <div
+        class="h-14 border-b border-gray-800 flex items-center justify-between px-6"
+      >
+        <div class="flex items-center space-x-2">
+          <select
+            class="bg-[#2a2a2a] text-gray-300 text-sm rounded px-3 py-1 border border-gray-700"
+          >
+            <option>Greeting</option>
+          </select>
+        </div>
+        <button
+          class="bg-[#2a2a2a] hover:bg-[#3a3a3a] text-gray-300 text-sm px-4 py-1.5 rounded border border-gray-700"
+        >
+          Share
+        </button>
+      </div>
+
+      <!-- Chat Messages -->
+      <div id="chatMessages" class="flex-1 overflow-y-auto px-6 py-8">
+        <!-- User Message -->
+        <div class="flex justify-end mb-6">
+          <div
+            class="bg-[#2a2a2a] text-gray-200 rounded-2xl px-4 py-2 max-w-md"
+          >
+            hi
+          </div>
+        </div>
+
+        <!-- AI Response -->
+        <div class="mb-6">
+          <div class="text-gray-200 mb-2">Hi! How can I help you today?</div>
+          <div class="flex items-center space-x-2 text-gray-500">
+            <button class="hover:text-gray-300">
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                ></path>
+              </svg>
+            </button>
+            <button class="hover:text-gray-300">
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
+                ></path>
+              </svg>
+            </button>
+            <button class="hover:text-gray-300">
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"
+                ></path>
+              </svg>
+            </button>
+            <button class="hover:text-gray-300">
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div class="flex items-center space-x-2 text-orange-400">
+          <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+            <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"
+            ></circle>
+            <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Input Area -->
+      <div class="border-t border-gray-800 p-4">
+        <div class="max-w-4xl mx-auto">
+          <div class="relative">
+            <textarea
+              id="messageInput"
+              placeholder="Reply..."
+              rows="1"
+              class="w-full bg-[#2a2a2a] text-gray-200 rounded-lg px-4 py-3 pr-32 resize-none focus:outline-none focus:ring-1 focus:ring-gray-600 placeholder-gray-500"
+            ></textarea>
+            <div class="absolute right-2 bottom-2 flex items-center space-x-2">
+              <button class="text-gray-500 hover:text-gray-300">
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 4v16m8-8H4"
+                  ></path>
+                </svg>
+              </button>
+              <button class="text-gray-500 hover:text-gray-300">
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+              </button>
+              <select
+                class="bg-transparent text-gray-400 text-xs border-none focus:outline-none"
+              >
+                <option>sonnet 4.5</option>
+              </select>
+              <button
+                id="sendButton"
+                class="bg-orange-500 hover:bg-orange-600 text-white rounded p-1.5"
+              >
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 10l7-7m0 0l7 7m-7-7v18"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="text-center text-xs text-gray-600 mt-2">
+            Claude is AI and can make mistakes. Please double-check responses.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const chatMessages = document.getElementById("chatMessages");
+      const messageInput = document.getElementById("messageInput");
+      const sendButton = document.getElementById("sendButton");
+
+      function addMessage(content, isUser) {
+        const messageDiv = document.createElement("div");
+        messageDiv.className = isUser ? "flex justify-end mb-6" : "mb-6";
+
+        if (isUser) {
+          messageDiv.innerHTML = `
+                    <div class="bg-[#2a2a2a] text-gray-200 rounded-2xl px-4 py-2 max-w-md">
+                        ${content}
+                    </div>
+                `;
+        } else {
+          messageDiv.innerHTML = `
+                    <div class="text-gray-200 mb-2">${content}</div>
+                    <div class="flex items-center space-x-2 text-gray-500">
+                        <button class="hover:text-gray-300">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                            </svg>
+                        </button>
+                        <button class="hover:text-gray-300">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path>
+                            </svg>
+                        </button>
+                    </div>
+                `;
+        }
+
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      async function makeCall(message) {
+        const response = await fetch("http://127.0.0.1:8000/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ message }),
+        });
+
+        const messageDiv = document.createElement("div");
+        messageDiv.className = "mb-6";
+        messageDiv.innerHTML = `
+    <div class="text-gray-200 mb-2" id="streaming-content"></div>
+    <div class="flex items-center space-x-2 text-gray-500">
+      <button class="hover:text-gray-300">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+        </svg>
+      </button>
+      <button class="hover:text-gray-300">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path>
+        </svg>
+      </button>
+    </div>
+  `;
+        chatMessages.appendChild(messageDiv);
+
+        const contentDiv = messageDiv.querySelector("#streaming-content");
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          const chunk = decoder.decode(value);
+          contentDiv.textContent += chunk;
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+      }
+      function sendMessage() {
+        const message = messageInput.value.trim();
+        if (message) {
+          addMessage(message, true);
+          messageInput.value = "";
+
+          makeCall(message);
+        }
+      }
+
+      sendButton.addEventListener("click", sendMessage);
+      messageInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          sendMessage();
+        }
+      });
+    </script>
+  </body>
+</html>
